@@ -1,0 +1,93 @@
+=============================
+BLOG APPLICATION - SETUP GUIDE
+=============================
+
+📌 **Project Overview**
+This is a secure blogging platform that allows users to:
+✔ Register & log in securely.
+✔ Reset passwords using OTP authentication.
+✔ Create, read, and delete blog posts.
+✔ Upload images safely with validation.
+
+=============================
+💻 **Installation & Setup**
+=============================
+
+1️⃣ **Install XAMPP & Start MySQL and Apache**
+   - Download XAMPP: https://www.apachefriends.org/download.html
+   - Open **XAMPP Control Panel**.
+   - Start **Apache** and **MySQL**.
+
+2️⃣ **Import the Database**
+   - Open **phpMyAdmin** (`http://localhost/phpmyadmin/`).
+   - Click **Import**.
+   - Select the file **dump.sql** from the project folder.
+   - Click **Go** to import the database.
+
+3️⃣ **Configure the Project**
+   - Place the project folder inside **`C:\xampp\htdocs\blog-app\`**.
+   - Open `init.php` and update **database credentials** if needed:
+     ```php
+     $host = "localhost";
+     $dbname = "blog_app"; // Ensure this matches your imported database
+     $username = "root";   // Default for XAMPP
+     $password = "";       // Default for XAMPP
+     ```
+   
+4️⃣ **Start the Project**
+   - Open your browser and visit:
+     ```
+     http://localhost/blog-app/public/index.php
+     ```
+   - You should see the homepage.
+
+=============================
+🛠 **Testing Security Features**
+=============================
+
+🚨 **Test SQL Injection (Before Fix)**
+   - Go to the **login page**.
+   - In the email field, enter:
+     ```
+     ' OR '1'='1
+     ```
+   - Enter any password.
+   - You should be logged in (SQL Injection successful).
+
+🚀 **Test XSS (Before Fix)**
+   - Create a new blog post.
+   - Enter this in the post content:
+     ```html
+     <script>alert('XSS Attack!');</script>
+     ```
+   - If the alert pops up, the system is vulnerable.
+
+🛡 **Test Secure Fixes**
+   - Register a user.
+   - Reset the password using **OTP-based recovery**.
+   - Upload an image (only `.jpg, .png, .gif` allowed).
+
+=============================
+📂 **Project Structure**
+=============================
+📁 blog-app/
+ ├── 📁 assets/            → CSS & JavaScript files
+ ├── 📁 config/            → Database & email configurations
+ ├── 📁 uploads/           → Stores uploaded images
+ ├── 📁 public/            → Main application files
+ │    ├── index.php        → Homepage (list blog posts)
+ │    ├── login.php        → User login (fixed)
+ │    ├── register.php     → User registration
+ │    ├── create_post.php  → Secure post creation
+ │    ├── forgot_password.php → OTP-based password reset
+ │    ├── view_post.php    → View individual blog post
+ │    ├── logout.php       → Log out session
+ ├── 📄 dump.sql           → MySQL database file
+ ├── 📄 init.php           → Database connection
+
+=============================
+📌 **Project Completed**
+=============================
+🎯 This project demonstrates **secure coding practices** and **common vulnerabilities**. 
+🚀 You can push this project to GitHub and document security improvements.
+
